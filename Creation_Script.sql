@@ -21,7 +21,7 @@ CREATE TABLE Users(
         Surname       Varchar (25) NOT NULL ,
         Birth_date    Date NOT NULL ,
         Email         Varchar (100) NOT NULL ,
-        User_Password Varchar (25) NOT NULL ,
+        User_Password Varchar (60) NOT NULL ,
         Studies       Varchar (50) NOT NULL ,
         User_Status   Varchar (25) NOT NULL ,
         PRIMARY KEY (Id_User )
