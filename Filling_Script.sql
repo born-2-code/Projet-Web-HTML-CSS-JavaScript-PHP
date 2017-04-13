@@ -41,7 +41,7 @@ INSERT INTO `order_content` (`Id_Content`, `Amount`) VALUES (NULL, '3');
 #------------------------------------------------------------
 
 
-INSERT INTO `goodie` (`Id_Goodie`, `Goodie_Thumbnail`, `Goodie_Name`, `Goodie_Description`, `Price`, `Stock`, `Sales`) VALUES (NULL, 'images/goodie/mugexia.jpg', 'Mug EXIA', 'Un Mug pour exprimer votre amour pour votre formation EXIA', '29.99', '97', '3'), (NULL, 'images/goodie/mugrh.jpg', 'Mug RH', 'Un Mug pour exprimer votre amour pour votre formation RH', '29.99', '99', '1'), (NULL, 'images/goodie/SweatBDE.jpg', 'Sweat EXIA', 'Un Sweat pour exprimer votre amour pour votre BDE', '49.99', '91', '9');
+INSERT INTO `goodie` (`Id_Goodie`, `Goodie_Thumbnail`, `Goodie_Name`, `Goodie_Description`, `Price`, `Stock`, `Sales`) VALUES (NULL, 'images/goodie/MugEXIA.jpg', 'Mug EXIA', 'Un Mug pour exprimer votre amour pour votre formation EXIA', '29.99', '97', '3'), (NULL, 'images/goodie/MugALT.jpg', 'Mug ALTERNANCE', 'Un Mug pour exprimer votre amour pour votre formation en Alternance', '29.99', '99', '1'), (NULL, 'images/goodie/MugEI.jpg', 'Mug EI CESI', 'Un Mug pour exprimer votre amour pour votre formation EI CESI', '29.99', '99', '1'), (NULL, 'images/goodie/SweatEXIA.jpg', 'Sweat EXIA', 'Un Sweat pour exprimer votre amour pour votre formation EXIA', '49.99', '91', '9'), (NULL, 'images/goodie/SweatALT.jpg', 'Sweat Alternance', 'Un Sweat pour exprimer votre amour pour votre formation en Alternance', '49.99', '91', '9'), (NULL, 'images/goodie/SweatEI.jpg', 'Sweat EI CESI', 'Un Sweat pour exprimer votre amour pour votre formation EI CESI', '49.99', '91', '9');
 
 
 
