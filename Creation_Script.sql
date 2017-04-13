@@ -42,6 +42,7 @@ CREATE TABLE Activity(
         Votes                  Int ,
         Number_Of_Participants Int ,
         Remaining_Places       Int ,
+		Activity_Price		   Int ,
         PRIMARY KEY (Id_Activity )
 )ENGINE=InnoDB;
 
