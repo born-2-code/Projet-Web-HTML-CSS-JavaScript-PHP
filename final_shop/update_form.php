@@ -2,9 +2,9 @@
 
 include 'singleton.php';
 
-$get_all_goodies = $conn->prepare("SELECT * FROM goodie WHERE Id_Goodie=:id");
+$get_all_goodies = $conn->prepare("SELECT * FROM goodie WHERE Id_Goodie=:Id_Goodie");
 $get_all_goodies->execute(array(
-':id' => htmlspecialchars($_GET['id'])
+':Id_Goodie' => htmlspecialchars($_GET['id'])
 ));
 
 ?>
@@ -23,35 +23,34 @@ $get_all_goodies->execute(array(
 	<?php
 	
 		$result=$get_all_goodies->fetch();
-		echo 'Goodie Thumbnail : '.$result['Goodie_Thumbnail'].'<br>';
-		echo 'Goodie Name : '.$result['Goodie_Name'].'<br>';
-		echo 'Goodie Description : '.$result['Goodie_Description'].'<br>';
-		echo 'Price : '.$result['Price'].'<br>';
-		echo 'Stock : '.$result['Stock'].'<br>';
-		echo 'Sales : '.$result['Sales'].'<br>';
+	
+		echo	'<form action="update.php" method="GET">';
+		echo		'<fieldset>';
+		echo		  'Goodie Thumbnail :<br>';
+		echo		  '<input type="text" name="thumbnail" value="'.$result['Goodie_Thumbnail'].'" required>';
+		echo		  '<br>';
+		echo		  'Goodie Name :<br>';
+		echo		  '<input type="text" name="Goodie_Name" value="'.$result['Goodie_Name'].'" required>';
+		echo		  '<br>';
+		echo		  'Goodie Description :<br>';
+		echo		  '<input type="text" name="Goodie_Description" value="'.$result['Goodie_Description'].'" required>';
+		echo		  '<br>';
+		echo		  'Price :<br>';
+		echo		  '<input type="text" name="Price" value="'.$result['Price'].'" required>';
+		echo		  '<br>';
+		echo		  'Stock :<br>';
+		echo		  '<input type="text" name="Stock" value="'.$result['Stock'].'" required>';
+		echo		  '<br>';
+		echo		  'Sales :<br>';
+		echo		  '<input type="text" name="Sales" value="'.$result['Sales'].'" required>';
+		echo		  '<br>';
+		echo		  '<input type="text" name="Id_Goodie" value="'.$result['Id_Goodie'].'" hidden>';
+		echo		  '<br>';
+		echo		  '<input type="submit" value="Update">';
+		echo		'</fieldset>';
+		echo	'</form>'; 
 	?>
 	
-	
-	<form method="GET">
-		<fieldset>
-		  Goodie Thumbnail :<br>
-		  <input type="text" name="thumbnail" value="" required>
-		  <br>
-		  Goodie Name :<br>
-		  <input type="text" name="Goodie_Name" value="" required>
-		  <br>
-		  Goodie Name :<br>
-		  <input type="text" name="Goodie_Name" value="" required>
-		  <br>
-		  Goodie Name :<br>
-		  <input type="text" name="Goodie_Name" value="" required>
-		  <br>
-		  Goodie Name :<br>
-		  <input type="text" name="Goodie_Name" value="" required>
-		  <br>
-		  <input type="submit" value="Envoyer via GET">
-		</fieldset>
-	</form> 
 	
 	</div>
   
