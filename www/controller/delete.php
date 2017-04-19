@@ -11,5 +11,5 @@ if(isset($_GET['id'])){
 	));
 }
 
-
+	header('Location: shop_CESI.php');
 ?>
