@@ -1,7 +1,4 @@
 <?
-
 // =====================    SHOP CONTROLLER     ========================= //
-
-include 'singleton.php';
-
+include_once 'singleton.php';
 ?>
