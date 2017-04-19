@@ -6,8 +6,8 @@ session_start();
 $_SESSION['cart'] = '0';
 
 // =====================    SHOP CONTROLLER     ========================= //
-include_once 'shop_controller.php';
-include_once 'ajaxAction_controller.php';
+include_once 'controller/shop_controller.php';
+include_once 'controller/ajaxAction_controller.php';
 
 
 
@@ -139,7 +139,7 @@ $get_all_goodies->execute();
 		</div>
 		<div class="copyright">
 					<div class="container">
-						<p>© 2017 BDE CESI. All rights reserved | Design by Exia CESI Orleans</p>
+						<p>© 2017 BDE CESI. All rights reserved | Design by Exia CESI Orleans | <a href="legal_notices.html">Legal Notices</a></p>
 					</div>
 		</div>
 	</body>

@@ -1,13 +1,12 @@
 <?php
-// On démarre la session AVANT d'écrire du code HTML
-session_start();
-
-// On s'amuse à créer quelques variables de session dans $_SESSION
-$_SESSION['cart'] = '0';
 
 // =====================    SHOP CONTROLLER     ========================= //
-include_once 'shop_controller.php';
-include_once 'ajaxAction_controller.php';
+include_once 'controller/shop_controller.php';
+include_once 'controller/ajaxAction_controller.php';
+
+	if(!isset($_SESSION["cart"])){
+		$_SESSION["cart"]= array();
+	}
 
 
 
@@ -47,6 +46,8 @@ $get_all_goodies->execute();
 		}
 	
 	</script>
+	
+	
 	
 	<body>
 		<div class="header" id="ban">
@@ -112,9 +113,9 @@ $get_all_goodies->execute();
 											<p>'.$result["Goodie_Description"].'</p>
 											
 												<input type="number" min="1" max="99" name="nombre" id="amount" value="1"> 
-												<button class="add_to_cart" id="add_to_cart" onClick="add_to_cart()">Add to cart</button></br>
-												<button class="add_to_cart" id="add_to_cart" onClick="goto(\'update_form.php?id='.$result['Id_Goodie'].'\')">Update Product</button>
-												<button class="add_to_cart" id="add_to_cart" onClick="goto(\'delete.php?id='.$result['Id_Goodie'].'\')">Remove Product</button>
+												<button class="add_to_cart" id="add_to_cart" onClick="goto(\'controller/update_cart.php?id='.$result['Id_Goodie'].'&qty=\')">Add to cart</button></br>
+												<button class="add_to_cart" id="add_to_cart" onClick="goto(\'controller/update_form.php?id='.$result['Id_Goodie'].'\')">Update Product</button>
+												<button class="add_to_cart" id="add_to_cart" onClick="goto(\'controller/delete.php?id='.$result['Id_Goodie'].'\')">Remove Product</button>
 											
 										</div></div>';
 									}
@@ -123,13 +124,13 @@ $get_all_goodies->execute();
 							</div>
 
 							<div class="clearfix"> </div>  </br>
+						
+							<nav class="test" >
 							
-							<nav class="paging">
-								<ul class="pagination pagination-lg">
-									<li><a href="#" aria-label="Previous"><span aria-hidden="true"><<</span></a></li>
-									<li><a href="#">1</a></li>
-									<li><a href="#" aria-label="Next"><span aria-hidden="true">>></span></a></li>
-								</ul>
+								<?php
+									echo	'<button class="add_to_cart" id="add_to_cart" onClick="goto(\'controller/add_form.php?id='.$result['Id_Goodie'].'\')">Add a Product</button></br>';
+								
+								?>
 							</nav>
 							
 							
@@ -150,7 +151,7 @@ $get_all_goodies->execute();
 		</div>
 		<div class="copyright">
 					<div class="container">
-						<p>© 2017 BDE CESI. All rights reserved | Design by Exia CESI Orleans</p>
+						<p>© 2017 BDE CESI. All rights reserved | Design by Exia CESI Orleans | <a href="legal_notices.html">Legal Notices</a></p>
 					</div>
 		</div>
 	</body>
