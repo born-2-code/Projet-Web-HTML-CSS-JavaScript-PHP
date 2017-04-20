@@ -1,8 +1,12 @@
 <?php 
 
-include 'singleton.php';
+// Include file singleton.php
+include_once 'singleton.php';
 
-$get_all_goodies = $conn->prepare("SELECT * FROM goodie WHERE Id_Goodie=:Id_Goodie");
+// Prepare the Select
+$get_all_goodies = $conn->prepare("SELECT * FROM Goodie WHERE Id_Goodie=:Id_Goodie");
+
+// Diplay all the values from the table with the good id 
 $get_all_goodies->execute(array(
 ':Id_Goodie' => htmlspecialchars($_GET['id'])
 ));
@@ -21,7 +25,7 @@ $get_all_goodies->execute(array(
 	<div class="container">  
 	
 	<?php
-	
+		// Retrieve the result and put it in var	
 		$result=$get_all_goodies->fetch();
 	
 		echo	'<form action="update.php" method="GET">';

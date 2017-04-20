@@ -1,11 +1,10 @@
 <?php 
 
-include 'singleton.php';
+// Include the file singleton.php
+include_once 'singleton.php';
 
-$get_all_goodies = $conn->prepare("SELECT * FROM goodie WHERE Id_Goodie=:Id_Goodie");
-$get_all_goodies->execute(array(
-':Id_Goodie' => htmlspecialchars($_GET['id'])
-));
+// Diplay all the values from the table with the good id 
+
 
 ?>
 
@@ -21,28 +20,28 @@ $get_all_goodies->execute(array(
 	<div class="container">  
 	
 	<?php
+
+
 	
-		$result=$get_all_goodies->fetch();
-	
-		echo	'<form action="add.php" method="GET">';
+		echo	'<form action="add.php" method="POST" enctype="multipart/form-data">';
 		echo		'<fieldset>';
 		echo		  'Goodie Thumbnail :<br>';
-		echo		  '<input type="text" name="thumbnail" value="'.$result['Goodie_Thumbnail'].'" required>';
+		echo		  '<input type="file" name="thumbnail" required>';
 		echo		  '<br>';
 		echo		  'Goodie Name :<br>';
-		echo		  '<input type="text" name="Goodie_Name" value="'.$result['Goodie_Name'].'" required>';
+		echo		  '<input type="text" name="Goodie_Name" value="" required>';
 		echo		  '<br>';
 		echo		  'Goodie Description :<br>';
-		echo		  '<input type="text" name="Goodie_Description" value="'.$result['Goodie_Description'].'" required>';
+		echo		  '<input type="text" name="Goodie_Description" value="" required>';
 		echo		  '<br>';
 		echo		  'Price :<br>';
-		echo		  '<input type="text" name="Price" value="'.$result['Price'].'" required>';
+		echo		  '<input type="text" name="Price" value="" required>';
 		echo		  '<br>';
 		echo		  'Stock :<br>';
-		echo		  '<input type="text" name="Stock" value="'.$result['Stock'].'" required>';
+		echo		  '<input type="text" name="Stock" value="" required>';
 		echo		  '<br>';
 		echo		  'Sales :<br>';
-		echo		  '<input type="text" name="Sales" value="'.$result['Sales'].'" required>';
+		echo		  '<input type="text" name="Sales" value="" required>';
 		echo		  '<br>';
 		echo		  '<input type="submit" value="Add">';
 		echo		'</fieldset>';

@@ -1,3 +1,38 @@
+<?php
+
+include_once 'controller/singleton.php';
+
+$products = "";
+$total_price=5;
+
+if(isset($_SESSION['cart'])){
+	
+	$get_product_info = $conn->prepare("SELECT * FROM `Goodie` WHERE Id_Goodie = :id");
+	
+
+	foreach($_SESSION['cart'] as $id => $qty){
+		
+		$get_product_info->execute(array(':id' => $id));
+		
+		$result = $get_product_info->fetch();
+		
+		$products .= '<tr id="products_'.$result['Id_Goodie'].'" class="productitm">
+						<td><img src="'.$result['Goodie_Thumbnail'].'" class="thumb"></td>
+						<td><input type="number" id="qty" value="'.$qty.'" readonly></td>
+						<td>'.$result['Goodie_Description'].'</td>
+						<td>'.$result['Price'].'</td>
+						<td><span class="remove"><img src="images/delete.jpg" alt="X" onclick="remove('.$result['Id_Goodie'].');"></span></td>
+					</tr>';
+
+		$total_price = $total_price+($result['Price']*$qty);
+	}
+}
+
+
+
+
+?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -12,6 +47,13 @@
 	<script src="js/jquery-1.11.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	</head>
+	
+	<script>
+		function remove(id){
+			location.href = "controller/delete_cart.php?id="+id;
+		}
+	</script>
+	
 	
 	<body>
 		<div class="header" id="ban">
@@ -33,11 +75,11 @@
 					<div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
 						<nav class="link-effect-7" id="link-effect-7">
 							<ul class="nav navbar-nav">
-								<li><a href="cart.html"><img src="images/panner_active.jpg" alt=""></a></li>
-								<li><a href="index.html">Activity</a></li>
-								<li><a href="shop.html">Shop</a></li>
-								<li><a href="travel.html">Profile</a></li>
-								<li><a href="fashion.html">Logout</a></li>
+								<li><a href="cart.php"><img src="images/panner_active.jpg" alt=""></a></li>
+								<li><a href="activities.php">Activity</a></li>
+								<li><a href="shop.php">Shop</a></li>
+								<li><a href="profile.php">Profile</a></li>
+								<li><a href="logout.php">Logout</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -78,48 +120,9 @@
 							</thead>
 							<tbody>
 								<!-- shopping cart contents -->
-								<tr class="productitm">
-									<td><img src="images/cart/MugEXIA.jpg" class="thumb"></td>
-									<td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
-									<td>Un mug pour exprimer votre amour pour votre formation EXIA</td>
-									<td>29€99</td>
-									<td><span class="remove"><img src="images/delete.jpg" alt="X"></span></td>
-								</tr>
-								<tr class="productitm">
-									<td><img src="images/cart/MugALT.jpg" class="thumb"></td>
-									<td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
-									<td>Un mug pour exprimer votre amour pour votre formation en Alternance</td>
-									<td>29€99</td>
-									<td><span class="remove"><img src="images/delete.jpg" alt="X"></span></td>
-								</tr>
-								<tr class="productitm">
-									<td><img src="images/cart/MugEI.jpg" class="thumb"></td>
-									<td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
-									<td>Un Mug pour exprimer votre amour pour votre formation EI CESI</td>
-									<td>29€99</td>
-									<td><span class="remove"><img src="images/delete.jpg" alt="X"></span></td>
-								</tr>
-								<tr class="productitm">
-									<td><img src="images/cart/SweatEXIA.jpg" class="thumb"></td>
-									<td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
-									<td>Un Sweat pour exprimer votre amour pour votre formation EXIA</td>
-									<td>49€99</td>
-									<td><span class="remove"><img src="images/delete.jpg" alt="X"></span></td>
-								</tr>
-								<tr class="productitm">
-									<td><img src="images/cart/SweatALT.jpg" class="thumb"></td>
-									<td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
-									<td>Un Sweat pour exprimer votre amour pour votre formation en Alternance</td>
-									<td>49€99</td>
-									<td><span class="remove"><img src="images/delete.jpg" alt="X"></span></td>
-								</tr>
-								<tr class="productitm">
-									<td><img src="images/cart/SweatEI.jpg" class="thumb"></td>
-									<td><input type="number" value="1" min="0" max="99" class="qtyinput"></td>
-									<td>Un Sweat pour exprimer votre amour pour votre formation EI CESI</td>
-									<td>49€99</td>
-									<td><span class="remove"><img src="images/delete.jpg" alt="X"></span></td>
-								</tr>
+								
+								<?php echo $products;?>
+								
 
 								<!-- tax + subtotal -->
 								<tr class="extracosts">
@@ -128,15 +131,18 @@
 									<td>5€00</td>
 									<td>&nbsp;</td>
 								</tr>
-								<tr class="totalprice">
-									<td class="light">Total:</td>
-									<td colspan="2">&nbsp;</td>
-									<td colspan="2"><span class="thick">239€94</span></td>
-								</tr>
+								
+								<?php
+									echo	'<tr class="totalprice">';
+									echo	'<td class="light">Total:</td>';
+									echo	'<td colspan="2">&nbsp;</td>';
+									echo	'<td colspan="2"><input type="number" id="price" value="'.$total_price.'" readonly></td>';
+									echo	'</tr>';
+								?>
 								  
 								<!-- checkout btn -->
 								<tr class="checkoutrow">
-									<td colspan="5" class="checkout"><button id="submitbtn">Checkout Now!</button></td>
+									<?php echo '<td onclick="location.href=\'controller/order_add.php?id='.$_SESSION['id'].'&cost=120\'" colspan="5" class="checkout"><button id="submitbtn">Checkout Now!</button></td>'; ?>
 								</tr>
 							</tbody>
 						</table>

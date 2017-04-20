@@ -1,36 +1,19 @@
 <?php
-// On démarre la session AVANT d'écrire du code HTML
-session_start();
-
-// On s'amuse à créer quelques variables de session dans $_SESSION
-$_SESSION['cart'] = '0';
 
 // =====================    SHOP CONTROLLER     ========================= //
+
+
+
 include_once 'controller/shop_controller.php';
-include_once 'controller/ajaxAction_controller.php';
-
-
-
-$get_all_goodies = $conn->prepare("SELECT * FROM goodie");
-// $get_all_goodies->execute(array(
-			// ':from_m' => $id_user,
-			// ':to' => $id_user_to,
-			// ':content' => $_GET['message'],
-		// ));
-
-$get_all_goodies->execute();
 
 		
 ?>
-
-
 <!DOCTYPE HTML>
 <html>
 	<head>
 		<title>SHOP</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<script type="applijewelleryion/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		<meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
 		<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 		<!-- Custom Theme files -->
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,600,700' rel='stylesheet' type='text/css'>
@@ -38,7 +21,19 @@ $get_all_goodies->execute();
 		<script src="js/jquery-1.11.1.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 	</head>
+	<script>
 	
+		function goto(site){
+			location.href = site;
+		}
+		
+		
+		function addtocart(id){
+			var qty = document.getElementById(id).value;
+			location.href = "controller/update_cart.php?id="+id+"&qty="+qty;
+		}
+	
+	</script>
 	<body>
 		<div class="header" id="ban">
 			<div class="container">
@@ -59,11 +54,11 @@ $get_all_goodies->execute();
 					<div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
 						<nav class="link-effect-7" id="link-effect-7">
 							<ul class="nav navbar-nav">
-								<li><a href="cart.html"><img src="images/panner.jpg" alt=""></a></li>
-								<li><a href="cart.html">Activity</a></li>
-								<li class="active act"><a href="features.html">Shop</a></li>
-								<li><a href="travel.html">Profile</a></li>
-								<li><a href="fashion.html">Logout</a></li>
+								<li><a href="cart.php"><img src="images/panner.jpg" alt=""></a></li>
+								<li><a href="activities.php">Activity</a></li>
+								<li class="active act"><a href="shop.php">Shop</a></li>
+								<li><a href="profile.php">Profile</a></li>
+								<li><a href="index.php">Logout</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -101,10 +96,24 @@ $get_all_goodies->execute();
 											<h4>'.$result["Goodie_Name"].'</h4>
 											<h5>'.$result["Price"].'</h5></br>										
 											<p>'.$result["Goodie_Description"].'</p>
-											<form>
-												<input type="number" min="1" max="99" name="nombre" id="amount" value="1"> 
-												<button class="add_to_cart" id="add_to_cart" onClick="add_to_cart()">Add to cart</button>
-											</form>
+											
+												<input type="number" min="1" max="99" name="nombre" id="'.$result['Id_Goodie'].'" value="1"> 
+												';
+
+												if($admin == '1'){
+													echo 
+													'<button class="add_to_cart" id="add_to_cart" onClick="addtocart(\''.$result['Id_Goodie'].'\')">Add to cart</button></br>
+													<button class="add_to_cart" id="add_to_cart" onClick="goto(\'controller/update_form.php?id='.$result['Id_Goodie'].'\')">Update Product</button>
+													<button class="add_to_cart" id="add_to_cart" onClick="goto(\'controller/delete.php?id='.$result['Id_Goodie'].'\')">Remove Product</button>';
+
+												}else{
+													echo 
+													'<button class="add_to_cart" id="add_to_cart" onClick="addtocart(\''.$result['Id_Goodie'].'\')">Add to cart</button></br>';
+												}
+
+
+												echo '</br>
+										
 										</div></div>';
 									}
 								?>
@@ -113,12 +122,21 @@ $get_all_goodies->execute();
 
 							<div class="clearfix"> </div>  </br>
 							
-							<nav class="paging">
-								<ul class="pagination pagination-lg">
-									<li><a href="#" aria-label="Previous"><span aria-hidden="true"><<</span></a></li>
-									<li><a href="#">1</a></li>
-									<li><a href="#" aria-label="Next"><span aria-hidden="true">>></span></a></li>
-								</ul>
+							<nav class="test" >
+
+							<?php 
+
+
+
+							if($admin == '1'){
+
+									echo '<button class="add_to_cart" id="add_to_cart" onClick="location.href=\'controller/add_form.php\'">Add a Product</button></br>';
+
+							}
+
+
+							?>
+
 							</nav>
 							
 							
@@ -132,8 +150,9 @@ $get_all_goodies->execute();
 			<!-- technology-right -->
 			</div>
 		</div>
-		<div class="footer">
+			<div class="footer">
 			<div class="container">
+
 				<div class="clearfix"></div>
 			</div>
 		</div>
@@ -141,6 +160,6 @@ $get_all_goodies->execute();
 					<div class="container">
 						<p>© 2017 BDE CESI. All rights reserved | Design by Exia CESI Orleans | <a href="legal_notices.html">Legal Notices</a></p>
 					</div>
-		</div>
+				</div>
 	</body>
 </html>
